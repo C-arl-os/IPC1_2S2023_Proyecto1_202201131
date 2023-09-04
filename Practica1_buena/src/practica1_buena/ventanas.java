@@ -30,8 +30,8 @@ public class ventanas {
     
     
     //inicio aguarda el array
-    public void Inicio(ArrayList<Profesor> prof){
-        Login login = new Login(prof);
+    public void Inicio(ArrayList<Profesor> prof,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno){
+        Login login = new Login(prof,curso,Alumno);
         
         login.setTitle("Bienvenido");
         login.setResizable(false);
@@ -39,17 +39,26 @@ public class ventanas {
         login.setVisible(true);
     }
     //conector
-    public void administrador(ArrayList<Profesor> Profe){
-        Administrador admin = new Administrador( Profe);
+    public void administrador(ArrayList<Profesor> Profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno){
+        Administrador admin = new Administrador( Profe,curso,Alumno);
         
         admin.setTitle("Administrador");
         admin.setResizable(false);
         admin.setLocationRelativeTo(admin);
         admin.setVisible(true);
     }
+    //solo manda un array
+    /*public void administrador(ArrayList<Profesor> Profe){
+        Administrador admin = new Administrador( Profe);
+        
+        admin.setTitle("Administrador");
+        admin.setResizable(false);
+        admin.setLocationRelativeTo(admin);
+        admin.setVisible(true);
+    }*/
     //crear nuevo profesor
-    public void ventanaCrearPro(ArrayList<Profesor> Profe){
-        CrearProfe crear = new CrearProfe(Profe);
+    public void ventanaCrearPro(ArrayList<Profesor> Profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno){
+        CrearProfe crear = new CrearProfe(Profe,curso,Alumno);
         
        crear.setTitle("Crear Profe");
         crear.setResizable(false);
@@ -58,16 +67,17 @@ public class ventanas {
     }
     
     //acutalizar Profesor
-    public void ActualizarProfe(ArrayList<Profesor> Profe){
-        ActualizarProfe actu = new ActualizarProfe(Profe);
+    public void ActualizarProfe(ArrayList<Profesor> Profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno){
+        ActualizarProfe actu = new ActualizarProfe(Profe,curso,Alumno);
         actu.setTitle("Actualizar Porfesor");
         actu.setResizable(false);
         actu.setLocationRelativeTo(actu);
         actu.setVisible(true);
     }
     
-    public void EliminarProfesor(ArrayList<Profesor> Profe){
-        EliminarProfe eliminar = new EliminarProfe(Profe);
+    //ventana eliminar
+    public void EliminarProfesor(ArrayList<Profesor> Profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno){
+        EliminarProfe eliminar = new EliminarProfe(Profe,curso,Alumno);
         eliminar.setTitle("Eliminar Profesoer");
         eliminar.setResizable(false);
         eliminar.setLocationRelativeTo(eliminar);

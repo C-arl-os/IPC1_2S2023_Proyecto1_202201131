@@ -14,7 +14,8 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
     ventanas ventana = new ventanas();
     ArrayList<Profesor> Profe = new ArrayList<Profesor>();
-    ArrayList<Profesor> alumno = new ArrayList();
+    ArrayList<Alumnos> Alumno = new ArrayList<Alumnos>();
+    ArrayList<Cursos> curso = new ArrayList<Cursos>();
     Listaprofesores lista = new Listaprofesores();
     
     public Login() {
@@ -24,8 +25,10 @@ public class Login extends javax.swing.JFrame {
         //Profe = bin.log.Profe;
     }
     
-    public Login(ArrayList<Profesor> profe ) {
+    public Login(ArrayList<Profesor> profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno ) {
         this.Profe = profe;
+        this.curso = curso;
+        this.Alumno = Alumno;
         initComponents();
         
     }
@@ -140,7 +143,7 @@ public class Login extends javax.swing.JFrame {
     private void btningresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btningresarActionPerformed
         if(usu.getText().equals("admin") && Contraseña.getText().equals("admin")){
             JOptionPane.showMessageDialog(null, "hola");
-            ventana.administrador(Profe);
+            ventana.administrador(Profe,curso,Alumno);
             this.dispose();
             
             

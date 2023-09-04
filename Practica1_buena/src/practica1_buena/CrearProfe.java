@@ -14,12 +14,17 @@ import javax.swing.JOptionPane;
 public class CrearProfe extends javax.swing.JFrame {
     
     ArrayList<Profesor> Profe;
+    ArrayList<Cursos> curso;
+    ArrayList<Alumnos> Alumno;
     int codigo;
-    public CrearProfe(ArrayList<Profesor> Profe) {
+    public CrearProfe(ArrayList<Profesor> Profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno) {
         this.Profe = Profe;
+        this.curso = curso;
+        this.Alumno = Alumno;
         initComponents();
-        
+        txtCodigo.setText("1234");
         codigo();
+        txtCodigo.setEnabled(false);
         
     }
     public CrearProfe(ArrayList<Profesor> Profe, int codigo) {
@@ -190,7 +195,7 @@ public class CrearProfe extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         ventanas ventana = new ventanas();
-        ventana.administrador(Profe);
+        ventana.administrador(Profe,curso,Alumno);
         
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -201,6 +206,7 @@ public class CrearProfe extends javax.swing.JFrame {
         for (int i = 0; i < Profe.size(); i++) {
             System.out.println(Profe.get(i).getNombre());
         }
+        txtCodigo.setText("1234");
         
     }//GEN-LAST:event_btnGuardarActionPerformed
     public void añadir() {

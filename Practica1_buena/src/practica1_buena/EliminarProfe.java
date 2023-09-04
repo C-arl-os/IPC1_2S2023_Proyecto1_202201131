@@ -17,8 +17,12 @@ public class EliminarProfe extends javax.swing.JFrame {
      * Creates new form EliminarProfe
      */
     ArrayList<Profesor> Profe;
-    public EliminarProfe(ArrayList<Profesor> Profe) {
+    ArrayList<Cursos> curso;
+    ArrayList<Alumnos> Alumno;
+    public EliminarProfe(ArrayList<Profesor> Profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno) {
         this.Profe = Profe;
+        this.curso = curso;
+        this.Alumno = Alumno;
         initComponents();
     }
 
@@ -133,7 +137,7 @@ public class EliminarProfe extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         ventanas ventana = new ventanas();
-        ventana.administrador(Profe);
+        ventana.administrador(Profe,curso,Alumno);
         
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed

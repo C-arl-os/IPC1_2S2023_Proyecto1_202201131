@@ -4,7 +4,11 @@
  */
 package practica1_buena;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,63 +17,74 @@ import javax.swing.table.DefaultTableModel;
  * @author sanci
  */
 public class Administrador extends javax.swing.JFrame {
+
     ArrayList<Profesor> Profe;
-    int indice =0;
+    ArrayList<Cursos> curso;
+    ArrayList<Alumnos> Alumno;
+    int indice = 0;
     Binario binario;
     Listaprofesores lista;
-        
-    public void cargarAutomatica(){
+
+    public void cargarAutomatica() {
         DefaultTableModel modelo = new DefaultTableModel();
-        
-        
+
         ArrayList<Object> nombrecolumna = new ArrayList<Object>();
         nombrecolumna.add("Codigo");
         nombrecolumna.add("Nombre");
         nombrecolumna.add("Apellido");
         nombrecolumna.add("Correo");
         nombrecolumna.add("genero");
-        for(Object columna: nombrecolumna){
+        for (Object columna : nombrecolumna) {
             modelo.addColumn(columna);
         }
-        int fila=tabladatos.getRowCount();
-        
+        int fila = tabladatos.getRowCount();
+
         this.tabladatos.setModel(modelo);
-        ArrayList<Object[]>datos = new ArrayList<Object[]>();
+        ArrayList<Object[]> datos = new ArrayList<Object[]>();
         System.out.println(Profe.size());
-        for(int i=0;i<Profe.size();i++){
-            String Codigo= (Profe.get(i).getCodigo());
+        for (int i = 0; i < Profe.size(); i++) {
+            String Codigo = (Profe.get(i).getCodigo());
             System.out.println(Profe.get(i).getNombre());
-            String nombre= (Profe.get(i).getNombre());
-            String Apellido= (Profe.get(i).getApellido());
-            String Correo= (Profe.get(i).getCorreo());
-            String Genero= (Profe.get(i).getGenero());
-            datos.add(new Object[]{Codigo,nombre,Apellido,Correo,Genero});
+            String nombre = (Profe.get(i).getNombre());
+            String Apellido = (Profe.get(i).getApellido());
+            String Correo = (Profe.get(i).getCorreo());
+            String Genero = (Profe.get(i).getGenero());
+            datos.add(new Object[]{Codigo, nombre, Apellido, Correo, Genero});
             System.out.println(datos);
-            
-            
+
         }
-        
-        for(Object [] Maestros: datos){
+
+        for (Object[] Maestros : datos) {
             modelo.addRow(Maestros);
         }
         tabladatos.setModel(modelo);
-        
-        
-        
-        
-        
-        
-        
+
     }
-    public Administrador(ArrayList<Profesor> Profe) {
+
+    //cargar cursos y proifes
+    public Administrador(ArrayList<Profesor> Profe, ArrayList<Cursos> curso, ArrayList<Alumnos> Alumno) {
         this.Profe = Profe;
+        this.curso = curso;
+        this.Alumno = Alumno;
         initComponents();
         cargarAutomatica();
         this.binario = new Binario();
-        
-        lista = new Listaprofesores(Profe);
-        
+
+        lista = new Listaprofesores(Profe, curso, Alumno);
+
     }
+
+    //cargar solo cursos
+   /* public Administrador(ArrayList<Profesor> Profe) {
+        this.Profe = Profe;
+
+        initComponents();
+        cargarAutomatica();
+        this.binario = new Binario();
+
+        lista = new Listaprofesores(Profe, curso, Alumno);
+
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,10 +104,27 @@ public class Administrador extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
-        btnrefrescar = new javax.swing.JButton();
+        btnpdf = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        btnmasiva = new javax.swing.JButton();
+        rutaCursos = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        panelCursos = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablacursos = new javax.swing.JTable();
+        btnCrearCurso = new javax.swing.JButton();
+        btnCargaCursos = new javax.swing.JButton();
+        btnActualizarCUrso = new javax.swing.JButton();
+        btnEliminarCursos = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        panelAlumnos = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tablaAlumnos = new javax.swing.JTable();
+        btncargaralumnos = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        RutaAlumnos = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,7 +148,7 @@ public class Administrador extends javax.swing.JFrame {
             }
         });
 
-        btnCarga.setText("Carga Masiva");
+        btnCarga.setText("Cargar Datos");
         btnCarga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargaActionPerformed(evt);
@@ -137,14 +169,19 @@ public class Administrador extends javax.swing.JFrame {
             }
         });
 
-        btnExportar.setText("Exportar Listado a DF");
+        btnExportar.setText("Guardardatos");
         btnExportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExportarActionPerformed(evt);
             }
         });
 
-        btnrefrescar.setText("Refrescar tablar");
+        btnpdf.setText("Exportar Pdf");
+        btnpdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnpdfActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -153,88 +190,234 @@ public class Administrador extends javax.swing.JFrame {
             }
         });
 
+        btnmasiva.setText("Carga Masiva");
+        btnmasiva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmasivaActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Ingrese la ruta del documento");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnCrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(rutaCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(160, 160, 160))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(btnCarga)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(btnCrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnmasiva, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(121, 121, 121)
+                                                .addComponent(btnSalir))
+                                            .addComponent(btnpdf, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnSalir)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnrefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnCarga)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCarga)
-                            .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnmasiva, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(btnExportar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnrefrescar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(btnSalir)
-                .addGap(19, 19, 19))
+                        .addComponent(btnpdf)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(6, 6, 6)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnExportar)
+                    .addComponent(rutaCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addComponent(btnSalir)
+                        .addGap(19, 19, 19))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCarga)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("Profesores", jPanel1);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+        jLabel1.setText("Listado Oficial");
+
+        tablacursos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Codigo", "Nombre", "Creditos", "Alumnos", "Profesor"
+            }
+        ));
+        jScrollPane2.setViewportView(tablacursos);
+
+        btnCrearCurso.setText("Crear");
+        btnCrearCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearCursoActionPerformed(evt);
+            }
+        });
+
+        btnCargaCursos.setText("Carga Masiva");
+
+        btnActualizarCUrso.setText("Actualizar");
+
+        btnEliminarCursos.setText("Eliminar");
+
+        jButton1.setText("Exportar Listado a Pdf");
+
+        javax.swing.GroupLayout panelCursosLayout = new javax.swing.GroupLayout(panelCursos);
+        panelCursos.setLayout(panelCursosLayout);
+        panelCursosLayout.setHorizontalGroup(
+            panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCursosLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCursosLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelCursosLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(panelCursosLayout.createSequentialGroup()
+                                        .addComponent(btnCrearCurso)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnCargaCursos))
+                                    .addGroup(panelCursosLayout.createSequentialGroup()
+                                        .addComponent(btnActualizarCUrso)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnEliminarCursos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(panelCursosLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 292, Short.MAX_VALUE)
+        panelCursosLayout.setVerticalGroup(
+            panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCursosLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel1)
+                .addGap(25, 25, 25)
+                .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCursosLayout.createSequentialGroup()
+                        .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCrearCurso)
+                            .addComponent(btnCargaCursos))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnActualizarCUrso)
+                            .addComponent(btnEliminarCursos))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Cursos", jPanel2);
+        jTabbedPane1.addTab("Cursos", panelCursos);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+        tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Codigo", "Nombre", "Apellido", "Correo", "Género"
+            }
+        ));
+        jScrollPane4.setViewportView(tablaAlumnos);
+
+        btncargaralumnos.setText("Carga Masiva");
+        btncargaralumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncargaralumnosActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Exportar Listado a PDF");
+
+        jLabel3.setText("Ingrese la ruta del documento:");
+
+        javax.swing.GroupLayout panelAlumnosLayout = new javax.swing.GroupLayout(panelAlumnos);
+        panelAlumnos.setLayout(panelAlumnosLayout);
+        panelAlumnosLayout.setHorizontalGroup(
+            panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAlumnosLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70)
+                .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(btncargaralumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RutaAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 292, Short.MAX_VALUE)
+        panelAlumnosLayout.setVerticalGroup(
+            panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAlumnosLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel3)
+                .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelAlumnosLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelAlumnosLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RutaAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(btncargaralumnos)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Alumnos", jPanel3);
+        jTabbedPane1.addTab("Alumnos", panelAlumnos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -256,63 +439,287 @@ public class Administrador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //regresa al login y manda los array
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         ventanas ventana = new ventanas();
-        ventana.Inicio(Profe);
+        ventana.Inicio(Profe, curso, Alumno);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    //crar ventana de acutalziar
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        //crear nueva ventana para crar el profe
         ventanas ventana = new ventanas();
-        ventana.ventanaCrearPro(Profe);
+        ventana.ventanaCrearPro(Profe, curso, Alumno);
         this.dispose();
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         ventanas ventanactualizar = new ventanas();
-        ventanactualizar.ActualizarProfe(Profe);
+        ventanactualizar.ActualizarProfe(Profe, curso, Alumno);
         this.dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
+    //crear ventana para eleiminar a profesor
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         ventanas Elimnarventana = new ventanas();
-        Elimnarventana.EliminarProfesor(Profe);
+        Elimnarventana.EliminarProfesor(Profe, curso, Alumno);
         this.dispose();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-       boolean ok = binario.guardar(lista);
-        if(ok)  JOptionPane.showMessageDialog(null,"Se guardaron los datos");
-        else    JOptionPane.showMessageDialog(null,"Ocurrio un error, no se guardaron los datos");
-        
+        boolean ok = binario.guardar(lista);
+        if (ok) {
+            JOptionPane.showMessageDialog(null, "Se guardaron los datos");
+        } else {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error, no se guardaron los datos");
+        }
+
     }//GEN-LAST:event_btnExportarActionPerformed
 
+    //cargar los datos a array
     private void btnCargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargaActionPerformed
         lista = binario.obtener();
         Profe = lista.Profesor;
-        JOptionPane.showMessageDialog(null,"Datos cargados");
+        curso = lista.Cursos;
+        Alumno = lista.Alumno;
+        
+        JOptionPane.showMessageDialog(null, "Datos cargados");
         System.out.println(lista.getProfesor().get(0).getNombre());
         cargarAutomatica();
+        cargarAutomaticaAlumnos();
     }//GEN-LAST:event_btnCargaActionPerformed
+
+    private void btnpdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpdfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnpdfActionPerformed
+
+    //para carga masiva de archivo csv
+    //List<Profesor> personas = new ArrayList<>();
+
+    public void leer(String ir) {
+        //String csvFile = "C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv"; // Reemplaza con la ruta de tu archivo CSV
+        String csvFile = ir; // Reemplaza con la ruta de tu archivo CSV
+        String[] data = null ;
+        List<Profesor> personas = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+            String line;
+            boolean firstLine = true; // Para ignorar la primera línea (encabezados)
+
+            while ((line = reader.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue; // Saltar la primera línea
+                }
+                System.out.println("a");
+                String[] parts = line.split(";") ;
+               // parts = line.split(",");
+                
+                
+                if (parts.length == 5) {
+                    System.out.println("a");
+
+                    int cod = Profe.size();
+                    String Codigo = String.valueOf(cod);//(String)parts[0].trim();
+                    String nombre = parts[1].trim();
+                    String Apellido = parts[2].trim();
+                    String Correo = parts[3].trim();
+                    String Genero = parts[4].trim();
+                    Profesor persona = new Profesor(Codigo, nombre, Apellido, Correo, Genero, "1234");
+                    personas.add(persona);
+                    System.out.println("Nombre: " + personas.get(0).getNombre() + ", Edad: " + persona.getApellido() + ", Ciudad: " + persona.getCodigo());
+                    System.out.println("a");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Archivo no encontrado");
+            JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
+                    + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
+        }catch(Exception e){
+            System.out.println("Archivo no encontrado");
+            JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
+                    + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
+        }
+
+        // Ahora, el ArrayList "personas" contiene objetos Persona con los datos del CSV.
+        for (Profesor persona : personas) {
+            System.out.println("Nombre: " + persona.getNombre() + ", Edad: " + persona.getApellido() + ", Ciudad: " + persona.getCodigo());
+        }
+        for(int i=0;i<personas.size();i++){
+            int cod = Profe.size();
+                    String Codigo = String.valueOf(cod);
+                    String nombre = personas.get(i).getNombre();
+                    String Apellido = personas.get(i).getApellido();
+                    String Correo = personas.get(i).getCorreo();
+                    String Genero = personas.get(i).getGenero();
+                    
+            Profe.add(new Profesor(Codigo, nombre, Apellido, Correo, Genero, "1234"));
+        }
+        //Profe = (ArrayList<Profesor>) personas;
+
+    }
+
+    //carga masiva 
+    private void btnmasivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmasivaActionPerformed
+        String ir = rutaCursos.getText();
+        
+        leer(ir);
+        cargarAutomatica();
+    }//GEN-LAST:event_btnmasivaActionPerformed
+
+    private void btnCrearCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCursoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCrearCursoActionPerformed
+    
+    //cargar a los estudiantes mediante archivo csv
+    //List<Profesor> personas = new ArrayList<>();
+   
+
+    public void leerEstudiante(String ir) {
+        //String csvFile = "C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv"; // Reemplaza con la ruta de tu archivo CSV
+        String csvFile = ir; // Reemplaza con la ruta de tu archivo CSV
+        String[] data = null ;
+        List<Alumnos> person = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+            String line;
+            boolean firstLine = true; // Para ignorar la primera línea (encabezados)
+
+            while ((line = reader.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue; // Saltar la primera línea
+                }
+                System.out.println("a");
+                String[] parts = line.split(";") ;
+               // parts = line.split(",");
+                
+                
+                if (parts.length == 5) {
+                    System.out.println("a");
+
+                    int cod = Alumno.size();
+                    String Codigo = String.valueOf(cod);//(String)parts[0].trim();
+                    String nombre = parts[1].trim();
+                    String Apellido = parts[2].trim();
+                    String Correo = parts[3].trim();
+                    String Genero = parts[4].trim();
+                    Alumnos pe = new Alumnos(Codigo, nombre, Apellido, Correo, Genero, "1234");
+                    person.add(pe);
+                    System.out.println("Nombre: " + pe.getNombre() + ", Edad: " + pe.getApellido() + ", Ciudad: " + pe.getCodigo());
+                    System.out.println("a");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Archivo no encontrado");
+            JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
+                    + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
+        }catch(Exception e){
+            System.out.println("Archivo no encontrado");
+            JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
+                    + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
+        }
+
+        // Ahora, el ArrayList "personas" contiene objetos Persona con los datos del CSV.
+        for (Alumnos persona : person) {
+            System.out.println("Nombre: " + persona.getNombre() + ", Edad: " + persona.getApellido() + ", Ciudad: " + persona.getCodigo());
+        }
+        for(int i=0;i<person.size();i++){
+            int cod = Alumno.size();
+                    String Codigo = String.valueOf(cod);
+                    String nombre = person.get(i).getNombre();
+                    String Apellido = person.get(i).getApellido();
+                    String Correo = person.get(i).getCorreo();
+                    String Genero = person.get(i).getGenero();
+                    
+           Alumno.add(new Alumnos(Codigo, nombre, Apellido, Correo, Genero, "1234"));
+        }
+        //Profe = (ArrayList<Profesor>) personas;
+
+    }
+
+    
+    public void cargarAutomaticaAlumnos() {
+        
+
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        ArrayList<Object> nombrecolumna = new ArrayList<Object>();
+        nombrecolumna.add("Codigo");
+        nombrecolumna.add("Nombre");
+        nombrecolumna.add("Apellido");
+        nombrecolumna.add("Correo");
+        nombrecolumna.add("genero");
+        for (Object columna : nombrecolumna) {
+            modelo.addColumn(columna);
+        }
+        int fila = tablaAlumnos.getRowCount();
+
+        this.tablaAlumnos.setModel(modelo);
+        ArrayList<Object[]> datos = new ArrayList<Object[]>();
+        System.out.println(Alumno.size());
+        for (int i = 0; i < Alumno.size(); i++) {
+            String Codigo = (Alumno.get(i).getCodigo());
+            System.out.println(Alumno.get(i).getNombre());
+            String nombre = (Alumno.get(i).getNombre());
+            String Apellido = (Alumno.get(i).getApellido());
+            String Correo = (Alumno.get(i).getCorreo());
+            String Genero = (Alumno.get(i).getGenero());
+            datos.add(new Object[]{Codigo, nombre, Apellido, Correo, Genero});
+            System.out.println(datos);
+
+        }
+
+        for (Object[] Alumn : datos) {
+            modelo.addRow(Alumn);
+        }
+        tablaAlumnos.setModel(modelo);
+
+    }
+    
+    private void btncargaralumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncargaralumnosActionPerformed
+        String rutaalum = RutaAlumnos.getText();
+        leerEstudiante(rutaalum);
+        cargarAutomaticaAlumnos();
+    }//GEN-LAST:event_btncargaralumnosActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField RutaAlumnos;
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnActualizarCUrso;
     private javax.swing.JButton btnCarga;
+    private javax.swing.JButton btnCargaCursos;
     private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnCrearCurso;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEliminarCursos;
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnrefrescar;
+    private javax.swing.JButton btncargaralumnos;
+    private javax.swing.JButton btnmasiva;
+    private javax.swing.JButton btnpdf;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel panelAlumnos;
+    private javax.swing.JPanel panelCursos;
+    private javax.swing.JTextField rutaCursos;
+    private javax.swing.JTable tablaAlumnos;
+    private javax.swing.JTable tablacursos;
     private javax.swing.JTable tabladatos;
     // End of variables declaration//GEN-END:variables
 }

@@ -16,8 +16,12 @@ public class ActualizarProfe extends javax.swing.JFrame {
      */
     int indice;
     ArrayList<Profesor> Profe;
-    public ActualizarProfe(ArrayList<Profesor> Profe) {
+    ArrayList<Cursos> curso;
+    ArrayList<Alumnos> Alumno;
+    public ActualizarProfe(ArrayList<Profesor> Profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno) {
         this.Profe =Profe;
+        this.curso =curso;
+        this.Alumno = Alumno;
         initComponents();
     }
     public void cargar(){
@@ -242,7 +246,7 @@ public class ActualizarProfe extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         ventanas ventana = new ventanas();
-        ventana.administrador(Profe);
+        ventana.administrador(Profe,curso,Alumno);
         
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
