@@ -17,7 +17,19 @@ public class Alumnos implements Serializable{
     private String Correo;
     private String Genero;
     private String contraseña;
+    private String nota;
 
+    public Alumnos(String Codigo) {
+        this.Codigo = Codigo;
+    }
+
+    public Alumnos(String Codigo, String Nombre, String Apellido) {
+        this.Codigo = Codigo;
+        this.Nombre = Nombre;
+        this.Apellido = Apellido;
+    }
+
+    
     public Alumnos(String Codigo, String Nombre, String Apellido, String Correo, String Genero,String contraseña) {
         this.Codigo = Codigo;
         this.Nombre = Nombre;
@@ -35,6 +47,25 @@ public class Alumnos implements Serializable{
         this.Genero = Genero;
         contraseña ="1234";
     }
+
+    public Alumnos(String Codigo, String Nombre, String Apellido, String Correo, String Genero, String contraseña, String nota) {
+        this.Codigo = Codigo;
+        this.Nombre = Nombre;
+        this.Apellido = Apellido;
+        this.Correo = Correo;
+        this.Genero = Genero;
+        this.contraseña = contraseña;
+        this.nota = nota;
+    }
+
+    public String getNota() {
+        return nota;
+    }
+
+    public void setNota(String nota) {
+        this.nota = nota;
+    }
+    
     public Alumnos() {
     }
 

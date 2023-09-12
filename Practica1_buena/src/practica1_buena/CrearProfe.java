@@ -16,13 +16,16 @@ public class CrearProfe extends javax.swing.JFrame {
     ArrayList<Profesor> Profe;
     ArrayList<Cursos> curso;
     ArrayList<Alumnos> Alumno;
+    ArrayList<Actividades> actividad;
     int codigo;
-    public CrearProfe(ArrayList<Profesor> Profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno) {
+    public CrearProfe(ArrayList<Profesor> Profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno,ArrayList<Actividades> actividad) {
         this.Profe = Profe;
         this.curso = curso;
         this.Alumno = Alumno;
+        this.actividad = actividad;
         initComponents();
-        txtCodigo.setText("1234");
+        txtCodigo.setText(String.valueOf(codigo));
+        txtContraseña.setText("1234");
         codigo();
         txtCodigo.setEnabled(false);
         
@@ -92,6 +95,12 @@ public class CrearProfe extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Genero:");
+
+        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoActionPerformed(evt);
+            }
+        });
 
         combogenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
 
@@ -195,7 +204,7 @@ public class CrearProfe extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         ventanas ventana = new ventanas();
-        ventana.administrador(Profe,curso,Alumno);
+        ventana.administrador(Profe,curso,Alumno,actividad);
         
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -206,9 +215,15 @@ public class CrearProfe extends javax.swing.JFrame {
         for (int i = 0; i < Profe.size(); i++) {
             System.out.println(Profe.get(i).getNombre());
         }
-        txtCodigo.setText("1234");
+      
+        txtCodigo.setText(String.valueOf(codigo));
+        txtContraseña.setText("1234");
         
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoActionPerformed
     public void añadir() {
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();

@@ -4,6 +4,8 @@
  */
 package practica1_buena;
 
+import com.sun.source.tree.TryTree;
+import java.io.FileInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,6 +17,14 @@ public class Listaprofesores implements Serializable{
     ArrayList<Profesor> Profesor;
     ArrayList<Cursos> Cursos;
     ArrayList<Alumnos> Alumno;
+    ArrayList<Actividades> actividad;
+
+    public Listaprofesores(ArrayList<Profesor> Profesor, ArrayList<Cursos> Cursos, ArrayList<Alumnos> Alumno, ArrayList<Actividades> actividad) {
+        this.Profesor = Profesor;
+        this.Cursos = Cursos;
+        this.Alumno = Alumno;
+        this.actividad = actividad;
+    }
 
    
     
@@ -58,7 +68,9 @@ public class Listaprofesores implements Serializable{
 
     public void setAlumno(ArrayList<Alumnos> Alumno) {
         this.Alumno = Alumno;
+        
     }
+    
 
     
     

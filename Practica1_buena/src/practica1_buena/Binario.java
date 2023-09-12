@@ -50,8 +50,9 @@ public class Binario {
             return lista;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "aa");
-            return lista;
-        }
+            
+        } 
+         return null;
     }
     
     

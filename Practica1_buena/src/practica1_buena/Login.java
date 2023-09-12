@@ -17,6 +17,10 @@ public class Login extends javax.swing.JFrame {
     ArrayList<Alumnos> Alumno = new ArrayList<Alumnos>();
     ArrayList<Cursos> curso = new ArrayList<Cursos>();
     Listaprofesores lista = new Listaprofesores();
+    ArrayList<Actividades> actividad= new ArrayList<Actividades>();
+    String nombre;
+    String Contra;
+    int indice;
     
     public Login() {
         initComponents();
@@ -25,16 +29,54 @@ public class Login extends javax.swing.JFrame {
         //Profe = bin.log.Profe;
     }
     
-    public Login(ArrayList<Profesor> profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno ) {
+    public Login(ArrayList<Profesor> profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno, ArrayList<Actividades> actividad ) {
         this.Profe = profe;
         this.curso = curso;
         this.Alumno = Alumno;
+        this.actividad = actividad;
         initComponents();
         
     }
     public Login(Login profe ) {
         
         initComponents();
+    }
+    
+    public boolean buscarAlumno(){
+        boolean auxilar =false;
+        for (int i = 0; i < Alumno.size(); i++) {
+            String codigo;
+            codigo = usu.getText();
+            String contraseña = Contraseña.getText();
+            if(codigo.equals(Alumno.get(i).getCodigo()) && contraseña.equals(Alumno.get(i).getContraseña())){
+                indice=i;
+                auxilar=true;
+            }else{
+            
+            }
+            
+        }
+        return false;
+    
+    }
+    public boolean buscarProfesor(){
+        boolean auxilar =false;
+    for (int i = 0; i < Profe.size(); i++) {
+            String codigo;
+            codigo = usu.getText();
+            String contraseña = Contraseña.getText();
+            if(codigo.equals(Profe.get(i).getCodigo()) && contraseña.equals(Profe.get(i).getContraseña())){
+                indice=i;
+                auxilar=true;
+            }else{
+                
+            }
+            
+        }
+        return auxilar;
+   
+    
+    
     }
     
     
@@ -143,12 +185,20 @@ public class Login extends javax.swing.JFrame {
     private void btningresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btningresarActionPerformed
         if(usu.getText().equals("admin") && Contraseña.getText().equals("admin")){
             JOptionPane.showMessageDialog(null, "hola");
-            ventana.administrador(Profe,curso,Alumno);
+            ventana.administrador(Profe,curso,Alumno,actividad);
             this.dispose();
             
             
         
-        }else{
+        }else if(buscarProfesor()==true){
+            
+            ventana.ModuloProfesores(Profe, curso, Alumno, indice,actividad);
+            this.dispose();;
+            
+        }else if(buscarAlumno()==true){
+            
+        }
+        else{
                         JOptionPane.showMessageDialog(null, "Datos incorrectos");
 
         }
