@@ -228,7 +228,14 @@ public class CrearProfe extends javax.swing.JFrame {
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
         String Correo = txtCorreo.getText();
+        
         String Cdigo = txtCodigo.getText();
+        
+        if(busqueda(Cdigo)==true){
+            int a = Integer.parseInt(Cdigo);
+            a=a+1;
+            Cdigo = String.valueOf(a);
+        }
         String Genero = (String) combogenero.getSelectedItem();
         String contraseña = txtContraseña.getText();
         
@@ -246,6 +253,20 @@ public class CrearProfe extends javax.swing.JFrame {
         txtCodigo.setText(String.valueOf(codigo));
         codigo();
 
+    }
+    
+    public boolean busqueda(String cd){
+        boolean ver= false;
+        for(int i=0;i<Profe.size();i++){
+            for(int j=0;j<Profe.size();j++){
+                if(cd.equals(Profe.get(j).getCodigo())){
+                    ver = true;
+                }
+            
+            }
+        
+        }
+        return ver;
     }
 
 

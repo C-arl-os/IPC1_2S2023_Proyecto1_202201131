@@ -117,8 +117,15 @@ public class ventanas {
         MdCursos.setLocationRelativeTo(MdCursos);
         MdCursos.setVisible(true);
     }
+        //ventana de profesor A Alumno
+         public void MostrarDatos(ArrayList<Profesor> Profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno, int indice,String indiceClase,ArrayList<Actividades> actividad,String codigo){
+        VerInformacion MdCursos = new VerInformacion(Profe,curso,Alumno,indice,indiceClase,actividad,codigo);
+        MdCursos.setTitle("Admnintrar Curso");
+        MdCursos.setResizable(false);
+        MdCursos.setLocationRelativeTo(MdCursos);
+        MdCursos.setVisible(true);
         //modulo de Profesores
-        
+         }
     public void ModuloProfesores(ArrayList<Profesor> Profe,ArrayList<Cursos> curso,ArrayList<Alumnos> Alumno, int indice,ArrayList<Actividades> actividad){
         ModuloProfesores MdCursos = new ModuloProfesores(Profe, curso, Alumno, indice,actividad);
         MdCursos.setTitle("Modulo Profesores Curso");

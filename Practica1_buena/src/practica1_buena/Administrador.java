@@ -4,6 +4,8 @@
  */
 package practica1_buena;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,6 +22,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -35,6 +41,7 @@ public class Administrador extends javax.swing.JFrame {
     int indice = 0;
     Binario binario;
     Listaprofesores lista;
+    int masculiono = 0, femenino = 0, auxiliar = 0;
 
     public void cargarAutomatica() {
         DefaultTableModel modelo = new DefaultTableModel();
@@ -123,6 +130,8 @@ public class Administrador extends javax.swing.JFrame {
         rutaCursos = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        panelprofe = new javax.swing.JPanel();
         panelCursos = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -135,6 +144,8 @@ public class Administrador extends javax.swing.JFrame {
         txtircursos = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
+        panelgraficocursos = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
         panelAlumnos = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaAlumnos = new javax.swing.JTable();
@@ -143,6 +154,8 @@ public class Administrador extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         RutaAlumnos = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        panelGraficoAlumnos = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -224,22 +237,51 @@ public class Administrador extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setText("Graficar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelprofeLayout = new javax.swing.GroupLayout(panelprofe);
+        panelprofe.setLayout(panelprofeLayout);
+        panelprofeLayout.setHorizontalGroup(
+            panelprofeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+        panelprofeLayout.setVerticalGroup(
+            panelprofeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 141, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSalir)
-                            .addComponent(btnCarga))
-                        .addGap(0, 671, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnExportar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCarga)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalir))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(btnmasiva))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addComponent(jButton6)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -256,15 +298,14 @@ public class Administrador extends javax.swing.JFrame {
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnpdf, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(rutaCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnmasiva, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
+                                    .addComponent(panelprofe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnpdf, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 242, Short.MAX_VALUE)))
+                        .addContainerGap())))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rutaCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,19 +325,26 @@ public class Administrador extends javax.swing.JFrame {
                             .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(btnpdf)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton6)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnExportar)
+                            .addComponent(btnCarga)
+                            .addComponent(btnSalir))
+                        .addGap(7, 7, 7)
+                        .addComponent(rutaCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rutaCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(btnmasiva, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(btnExportar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCarga)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(btnSalir)
-                .addContainerGap())
+                        .addComponent(btnmasiva, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addComponent(panelprofe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         jTabbedPane1.addTab("Profesores", jPanel1);
@@ -360,66 +408,92 @@ public class Administrador extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout panelgraficocursosLayout = new javax.swing.GroupLayout(panelgraficocursos);
+        panelgraficocursos.setLayout(panelgraficocursosLayout);
+        panelgraficocursosLayout.setHorizontalGroup(
+            panelgraficocursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 217, Short.MAX_VALUE)
+        );
+        panelgraficocursosLayout.setVerticalGroup(
+            panelgraficocursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 169, Short.MAX_VALUE)
+        );
+
+        jButton7.setText("Generar Grafico");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelCursosLayout = new javax.swing.GroupLayout(panelCursos);
         panelCursos.setLayout(panelCursosLayout);
         panelCursosLayout.setHorizontalGroup(
             panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCursosLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCursosLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel1))
+                    .addGroup(panelCursosLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtircursos, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(btnCargaCursos))
                         .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelCursosLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnActualizarCUrso)
-                                    .addComponent(btnCrearCurso))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnEliminarCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(panelCursosLayout.createSequentialGroup()
-                                        .addGap(22, 22, 22)
-                                        .addComponent(jButton4))))
+                                        .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnActualizarCUrso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnCrearCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(28, 28, 28)
+                                        .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnEliminarCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton4)))
+                                    .addGroup(panelCursosLayout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(panelgraficocursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(panelCursosLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelCursosLayout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnCargaCursos)
-                                        .addComponent(txtircursos, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addComponent(jLabel1))
-                .addContainerGap(89, Short.MAX_VALUE))
+                                .addGap(79, 79, 79)
+                                .addComponent(jButton7)))))
+                .addContainerGap(237, Short.MAX_VALUE))
         );
         panelCursosLayout.setVerticalGroup(
             panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCursosLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel1)
-                .addGap(25, 25, 25)
-                .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCursosLayout.createSequentialGroup()
                         .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCrearCurso)
                             .addComponent(jButton4))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnActualizarCUrso)
                             .addComponent(btnEliminarCursos))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
-                        .addGap(22, 22, 22)
+                        .addGap(7, 7, 7)
+                        .addComponent(jButton7)
+                        .addGap(18, 18, 18)
+                        .addComponent(panelgraficocursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelCursosLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtircursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCargaCursos)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(56, Short.MAX_VALUE))
+                        .addComponent(btnCargaCursos)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cursos", panelCursos);
@@ -460,45 +534,71 @@ public class Administrador extends javax.swing.JFrame {
             }
         });
 
+        jButton8.setText("Generar Grafico");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelGraficoAlumnosLayout = new javax.swing.GroupLayout(panelGraficoAlumnos);
+        panelGraficoAlumnos.setLayout(panelGraficoAlumnosLayout);
+        panelGraficoAlumnosLayout.setHorizontalGroup(
+            panelGraficoAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+        panelGraficoAlumnosLayout.setVerticalGroup(
+            panelGraficoAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 140, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout panelAlumnosLayout = new javax.swing.GroupLayout(panelAlumnos);
         panelAlumnos.setLayout(panelAlumnosLayout);
         panelAlumnosLayout.setHorizontalGroup(
             panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAlumnosLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btncargaralumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
                     .addGroup(panelAlumnosLayout.createSequentialGroup()
-                        .addGap(70, 70, 70)
                         .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(btncargaralumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(RutaAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panelAlumnosLayout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jButton2)))
-                .addContainerGap(148, Short.MAX_VALUE))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(RutaAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAlumnosLayout.createSequentialGroup()
+                                .addGap(91, 91, 91)
+                                .addComponent(jButton8))
+                            .addGroup(panelAlumnosLayout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(panelGraficoAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton2))))))
+                .addContainerGap(256, Short.MAX_VALUE))
         );
         panelAlumnosLayout.setVerticalGroup(
             panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAlumnosLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel3)
-                .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(60, 60, 60)
+                .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAlumnosLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelAlumnosLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(RutaAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btncargaralumnos)
-                        .addGap(32, 32, 32)
+                        .addComponent(btncargaralumnos))
+                    .addGroup(panelAlumnosLayout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
-                .addContainerGap(117, Short.MAX_VALUE))
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton8)
+                        .addGap(26, 26, 26)
+                        .addComponent(panelGraficoAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Alumnos", panelAlumnos);
@@ -507,17 +607,11 @@ public class Administrador extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addGap(14, 14, 14))
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -602,60 +696,63 @@ public class Administrador extends javax.swing.JFrame {
         String csvFile = ir; // Reemplaza con la ruta de tu archivo CSV
         String[] data = null;
         List<Profesor> personas = new ArrayList<>();
+        if (Profe.size() <= 50) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+                String line;
+                boolean firstLine = true; // Para ignorar la primera línea (encabezados)
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-            String line;
-            boolean firstLine = true; // Para ignorar la primera línea (encabezados)
-
-            while ((line = reader.readLine()) != null) {
-                if (firstLine) {
-                    firstLine = false;
-                    continue; // Saltar la primera línea
-                }
-                System.out.println("a");
-                String[] parts = line.split(";");
-                // parts = line.split(",");
-
-                if (parts.length == 5) {
+                while ((line = reader.readLine()) != null) {
+                    if (firstLine) {
+                        firstLine = false;
+                        continue; // Saltar la primera línea
+                    }
                     System.out.println("a");
+                    String[] parts = line.split(";");
+                    // parts = line.split(",");
 
-                    int cod = Profe.size();
-                    String Codigo = String.valueOf(cod);//(String)parts[0].trim();
-                    String nombre = parts[1].trim();
-                    String Apellido = parts[2].trim();
-                    String Correo = parts[3].trim();
-                    String Genero = parts[4].trim();
-                    Profesor persona = new Profesor(Codigo, nombre, Apellido, Correo, Genero, "1234");
-                    personas.add(persona);
-                    System.out.println("Nombre: " + personas.get(0).getNombre() + ", Edad: " + persona.getApellido() + ", Ciudad: " + persona.getCodigo());
-                    System.out.println("a");
+                    if (parts.length == 5) {
+                        System.out.println("a");
+
+                        int cod = Profe.size();
+                        String Codigo = String.valueOf(cod);//(String)parts[0].trim();
+                        String nombre = parts[1].trim();
+                        String Apellido = parts[2].trim();
+                        String Correo = parts[3].trim();
+                        String Genero = parts[4].trim();
+                        Profesor persona = new Profesor(Codigo, nombre, Apellido, Correo, Genero, "1234");
+                        personas.add(persona);
+                        System.out.println("Nombre: " + personas.get(0).getNombre() + ", Edad: " + persona.getApellido() + ", Ciudad: " + persona.getCodigo());
+                        System.out.println("a");
+                    }
                 }
+
+            } catch (FileNotFoundException e) {
+
+                e.printStackTrace();
+                System.out.println("Archivo no encontrado");
+                JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
+                        + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
+            } catch (Exception e) {
+                System.out.println("Archivo no encontrado");
+                JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
+                        + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
             }
+            // Ahora, el ArrayList "personas" contiene objetos Persona con los datos del CSV.
+            for (Profesor persona : personas) {
+                System.out.println("Nombre: " + persona.getNombre() + ", Edad: " + persona.getApellido() + ", Ciudad: " + persona.getCodigo());
+            }
+            for (int i = 0; i < personas.size(); i++) {
+                int cod = Profe.size();
+                String Codigo = String.valueOf(cod);
+                String nombre = personas.get(i).getNombre();
+                String Apellido = personas.get(i).getApellido();
+                String Correo = personas.get(i).getCorreo();
+                String Genero = personas.get(i).getGenero();
 
-        } catch (FileNotFoundException e) {
-
-            e.printStackTrace();
-            System.out.println("Archivo no encontrado");
-            JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
-                    + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
-        } catch (Exception e) {
-            System.out.println("Archivo no encontrado");
-            JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
-                    + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
-        }
-        // Ahora, el ArrayList "personas" contiene objetos Persona con los datos del CSV.
-        for (Profesor persona : personas) {
-            System.out.println("Nombre: " + persona.getNombre() + ", Edad: " + persona.getApellido() + ", Ciudad: " + persona.getCodigo());
-        }
-        for (int i = 0; i < personas.size(); i++) {
-            int cod = Profe.size();
-            String Codigo = String.valueOf(cod);
-            String nombre = personas.get(i).getNombre();
-            String Apellido = personas.get(i).getApellido();
-            String Correo = personas.get(i).getCorreo();
-            String Genero = personas.get(i).getGenero();
-
-            Profe.add(new Profesor(Codigo, nombre, Apellido, Correo, Genero, "1234"));
+                Profe.add(new Profesor(Codigo, nombre, Apellido, Correo, Genero, "1234"));
+            }
+        } else {
+            System.out.println("Cupo lleno");
         }
         //Profe = (ArrayList<Profesor>) personas;
 
@@ -688,62 +785,65 @@ public class Administrador extends javax.swing.JFrame {
         String csvFile = ir; // Reemplaza con la ruta de tu archivo CSV
         String[] data = null;
         List<Alumnos> person = new ArrayList<>();
+        if (Alumno.size() <= 300) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+                String line;
+                boolean firstLine = true; // Para ignorar la primera línea (encabezados)
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-            String line;
-            boolean firstLine = true; // Para ignorar la primera línea (encabezados)
-
-            while ((line = reader.readLine()) != null) {
-                if (firstLine) {
-                    firstLine = false;
-                    continue; // Saltar la primera línea
-                }
-                System.out.println("a");
-                String[] parts = line.split(";");
-                // parts = line.split(",");
-
-                if (parts.length == 5) {
+                while ((line = reader.readLine()) != null) {
+                    if (firstLine) {
+                        firstLine = false;
+                        continue; // Saltar la primera línea
+                    }
                     System.out.println("a");
+                    String[] parts = line.split(";");
+                    // parts = line.split(",");
 
-                    //int cod = (Alumno.size() + 100);
-                    String Codigo = parts[0].trim();//String.valueOf(cod);//(String)parts[0].trim();
-                    String nombre = parts[1].trim();
-                    String Apellido = parts[2].trim();
-                    String Correo = parts[3].trim();
-                    String Genero = parts[4].trim();
-                    Alumnos pe = new Alumnos(Codigo, nombre, Apellido, Correo, Genero, "1234");
-                    person.add(pe);
-                    System.out.println("Nombre: " + pe.getNombre() + ", Edad: " + pe.getApellido() + ", Ciudad: " + pe.getCodigo());
-                    System.out.println("a");
+                    if (parts.length == 5) {
+                        System.out.println("a");
+
+                        //int cod = (Alumno.size() + 100);
+                        String Codigo = parts[0].trim();//String.valueOf(cod);//(String)parts[0].trim();
+                        String nombre = parts[1].trim();
+                        String Apellido = parts[2].trim();
+                        String Correo = parts[3].trim();
+                        String Genero = parts[4].trim();
+                        Alumnos pe = new Alumnos(Codigo, nombre, Apellido, Correo, Genero, "1234");
+                        person.add(pe);
+                        System.out.println("Nombre: " + pe.getNombre() + ", Edad: " + pe.getApellido() + ", Ciudad: " + pe.getCodigo());
+                        System.out.println("a");
+                    }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Archivo no encontrado");
+                JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
+                        + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
+            } catch (Exception e) {
+                System.out.println("Archivo no encontrado");
+                JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
+                        + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Archivo no encontrado");
-            JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
-                    + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
-        } catch (Exception e) {
-            System.out.println("Archivo no encontrado");
-            JOptionPane.showMessageDialog(null, "Archivo no encontrado ingrese la direcion \n"
-                    + "ejemplo C:\\Users\\sanci\\Desktop\\pr\\IPC1_2S2023_Proyecto1_202201131\\Practica1_buena\\Archivos\\PRUEVA.csv ");
-        }
 
-        // Ahora, el ArrayList "personas" contiene objetos Persona con los datos del CSV.
-        for (Alumnos persona : person) {
-            System.out.println("Nombre: " + persona.getNombre() + ", Edad: " + persona.getApellido() + ", Ciudad: " + persona.getCodigo());
-        }
-        for (int i = 0; i < person.size(); i++) {
-            int cod = Alumno.size();
-            String Codigo = person.get(i).getCodigo();//String.valueOf(cod);
-            String nombre = person.get(i).getNombre();
-            String Apellido = person.get(i).getApellido();
-            String Correo = person.get(i).getCorreo();
-            String Genero = person.get(i).getGenero();
+            // Ahora, el ArrayList "personas" contiene objetos Persona con los datos del CSV.
+            for (Alumnos persona : person) {
+                System.out.println("Nombre: " + persona.getNombre() + ", Edad: " + persona.getApellido() + ", Ciudad: " + persona.getCodigo());
+            }
+            for (int i = 0; i < person.size(); i++) {
+                int cod = Alumno.size();
+                String Codigo = person.get(i).getCodigo();//String.valueOf(cod);
+                String nombre = person.get(i).getNombre();
+                String Apellido = person.get(i).getApellido();
+                String Correo = person.get(i).getCorreo();
+                String Genero = person.get(i).getGenero();
 
-            Alumno.add(new Alumnos(Codigo, nombre, Apellido, Correo, Genero, "1234"));
-        }
-        //Profe = (ArrayList<Profesor>) personas;
+                Alumno.add(new Alumnos(Codigo, nombre, Apellido, Correo, Genero, "1234"));
+            }
 
+            //Profe = (ArrayList<Profesor>) personas;
+        } else {
+            System.out.println("se lleno");
+        }
     }
 
     public void cargarAutomaticaAlumnos() {
@@ -853,13 +953,13 @@ public class Administrador extends javax.swing.JFrame {
         } else {
             System.out.println("El usuario canceló la selección.");
         }
-        
+
         leerEstudiante(rutaArchivo);
         cargarAutomaticaAlumnos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-         String rutaArchivo = null;
+        String rutaArchivo = null;
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de Texto (*.txt)", "txt");
         fileChooser.setFileFilter(filter);
@@ -873,7 +973,7 @@ public class Administrador extends javax.swing.JFrame {
         } else {
             System.out.println("El usuario canceló la selección.");
         }
-        
+
         leerCursos(rutaArchivo);
         cargarCursos();
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -893,13 +993,119 @@ public class Administrador extends javax.swing.JFrame {
         } else {
             System.out.println("El usuario canceló la selección.");
         }
-        
-       
-            
-            leer(rutaArchivo);
-            cargarAutomatica();
-        
+
+        leer(rutaArchivo);
+        cargarAutomatica();
+
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        con();
+        DefaultPieDataset datos = new DefaultPieDataset();
+        datos.setValue("Masculino", masculiono);
+        datos.setValue("Femenino", femenino);
+
+        JFreeChart grafico_circular = ChartFactory.createPieChart("Genero ", datos,
+                true,
+                true,
+                false);
+        ChartPanel panel = new ChartPanel(grafico_circular);
+        panel.setMouseWheelEnabled(true);
+        panel.setPreferredSize(new Dimension(250, 150));
+
+        panelprofe.setLayout(new BorderLayout());
+        panelprofe.add(panel, BorderLayout.NORTH);
+
+        pack();
+        repaint();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    public ordenamiento[] conmasEstudiantes() {
+        ordenamiento or[] = new ordenamiento[curso.size()];
+
+        int cursos;
+        String nombre1, nombre2, nombre3;
+        for (int i = 0; i < curso.size(); i++) {
+            // int alumno1 = Integer.parseInt(curso.get(j).getAlumnos());
+            nombre1 = curso.get(i).getNombre();
+            int alumno2 = Integer.parseInt(curso.get(i).getAlumnos());
+
+            or[i] = (new ordenamiento(nombre1, alumno2));
+
+        }
+        for(int i=0;i<or.length;i++){
+            for (int j = 0; j < (or.length-1); j++) {
+                
+                int aux1 = or[j].getAlumnos();
+                int aux2 = or[j+1].getAlumnos();
+                if (aux1 > aux2) {
+                    // Intercambiar arr[j] y arr[j+1]
+                    ordenamiento temp = or[j];
+                    or[j] = or[j + 1];
+                    or[j + 1] = temp;
+                    
+                }
+
+            }
+        }
+        
+        return or;
+        
+    }
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        ordenamiento[] or =conmasEstudiantes();
+        for(ordenamiento aa : or){
+            System.out.println(aa.getNombre());
+        }
+        String nombre1= or[or.length-1].nombre;
+        String nombre2= or[or.length-2].nombre;
+
+        String nombre3= or[or.length-3].nombre;
+        int valor1 =or[or.length-1].getAlumnos();
+        int valor2 =or[or.length-2].getAlumnos();
+        int valor3 =or[or.length-3].getAlumnos();
+        DefaultPieDataset datos = new DefaultPieDataset();
+        datos.setValue(nombre1, valor1);
+        datos.setValue(nombre2, valor2);
+        datos.setValue(nombre3, valor3);
+
+        JFreeChart grafico_circular = ChartFactory.createPieChart("Cursos con mas Alumnos ", datos,
+                true,
+                true,
+                false);
+        ChartPanel panel = new ChartPanel(grafico_circular);
+        panel.setMouseWheelEnabled(true);
+        panel.setPreferredSize(new Dimension(250, 150));
+
+        panelgraficocursos.setLayout(new BorderLayout());
+        panelgraficocursos.add(panel, BorderLayout.NORTH);
+
+        pack();
+        repaint();
+        
+
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        conAlumnos();
+        DefaultPieDataset datos = new DefaultPieDataset();
+        datos.setValue("Masculino", masculiono);
+        datos.setValue("Femenino", femenino);
+
+        JFreeChart grafico_circular = ChartFactory.createPieChart("Genero Alumnos", datos,
+                true,
+                true,
+                false);
+        ChartPanel panel = new ChartPanel(grafico_circular);
+        panel.setMouseWheelEnabled(true);
+        panel.setPreferredSize(new Dimension(250, 150));
+
+        panelGraficoAlumnos.setLayout(new BorderLayout());
+        panelGraficoAlumnos.add(panel, BorderLayout.NORTH);
+
+        pack();
+        repaint();
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     public void cargarCursos() {
         DefaultTableModel modelo = new DefaultTableModel();
@@ -934,6 +1140,35 @@ public class Administrador extends javax.swing.JFrame {
         }
         tablacursos.setModel(modelo);
 
+    }
+
+    //contar para graficar
+    public void con() {
+        masculiono = 0;
+        femenino = 0;
+        for (int i = 0; i < Profe.size(); i++) {
+            if (Profe.get(i).getGenero().equals("M") || Profe.get(i).getGenero().equals("m")) {
+                masculiono++;
+            } else {
+                femenino++;
+
+            }
+        }
+
+    }
+    
+    public void conAlumnos(){
+        masculiono = 0;
+        femenino = 0;
+        for (int i = 0; i < Alumno.size(); i++) {
+            if (Alumno.get(i).getGenero().equals("M") || Alumno.get(i).getGenero().equals("m")) {
+                masculiono++;
+            } else {
+                femenino++;
+
+            }
+        }
+    
     }
 
     public void leerCursos(String ir) {
@@ -993,8 +1228,8 @@ public class Administrador extends javax.swing.JFrame {
 
             curso.add(new Cursos(Codigo, nombre, Creditos, Alumnos, Profesor));
         }
-        //Profe = (ArrayList<Profesor>) personas;
 
+        //Profe = (ArrayList<Profesor>) personas;
     }
     /**
      * @param args the command line arguments
@@ -1020,6 +1255,9 @@ public class Administrador extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1031,6 +1269,9 @@ public class Administrador extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel panelAlumnos;
     private javax.swing.JPanel panelCursos;
+    private javax.swing.JPanel panelGraficoAlumnos;
+    private javax.swing.JPanel panelgraficocursos;
+    private javax.swing.JPanel panelprofe;
     private javax.swing.JTextField rutaCursos;
     private javax.swing.JTable tablaAlumnos;
     private javax.swing.JTable tablacursos;
